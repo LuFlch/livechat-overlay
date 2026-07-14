@@ -1,5 +1,5 @@
 import { join } from 'path';
-
+import { tmpdir } from 'os';
 import { unlink } from 'fs/promises';
 import { createReadStream } from 'fs';
 import gTTS from 'gtts';
@@ -7,9 +7,7 @@ import gTTS from 'gtts';
 export const promisedGtts = (voice, lang) =>
   new Promise<string>((resolve, reject) => {
     const gtts = new gTTS(voice, lang);
-
-    const filePath = join(__dirname, `${Date.now()}-${Math.ceil(Math.random() * 100)}.mp3`);
-
+    const filePath = join(tmpdir(), `${Date.now()}-${Math.ceil(Math.random() * 100)}.mp3`);
     gtts.save(filePath, function (err) {
       if (err) {
         reject(err);
