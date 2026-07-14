@@ -35,4 +35,4 @@ RUN pnpm generate
 COPY --from=builder /app/src ./src
 
 EXPOSE $PORT
-CMD ["pnpm", "run", "docker:start"]
+CMD ["sh", "-c", "export HOME=/home/container && export PORT=${SERVER_PORT:-3000} && node_modules/.bin/prisma db push --skip-generate && exec node_modules/.bin/tsx src/index.ts"]
